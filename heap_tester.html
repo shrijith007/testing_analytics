@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHub - Premium Electronics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f1f2f6, #ddd);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(51, 51, 51, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">TechHub</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="cart-icon" id="cartIcon">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Premium Electronics</h1>
+            <p>Discover the latest in technology with unbeatable prices</p>
+            <a href="#products" class="cta-button">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="products" id="products">
+        <div class="container">
+            <h2>Featured Products</h2>
+            <div class="product-grid">
+                <div class="product-card" data-product="smartphone">
+                    <div class="product-image">📱</div>
+                    <div class="product-name">Premium Smartphone</div>
+                    <div class="product-price">$699</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                
+                <div class="product-card" data-product="laptop">
+                    <div class="product-image">💻</div>
+                    <div class="product-name">Gaming Laptop</div>
+                    <div class="product-price">$1,299</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                
+                <div class="product-card" data-product="headphones">
+                    <div class="product-image">🎧</div>
+                    <div class="product-name">Wireless Headphones</div>
+                    <div class="product-price">$199</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                
+                <div class="product-card" data-product="watch">
+                    <div class="product-image">⌚</div>
+                    <div class="product-name">Smart Watch</div>
+                    <div class="product-price">$399</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                
+                <div class="product-card" data-product="camera">
+                    <div class="product-image">📷</div>
+                    <div class="product-name">Digital Camera</div>
+                    <div class="product-price">$899</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                
+                <div class="product-card" data-product="tablet">
+                    <div class="product-image">📱</div>
+                    <div class="product-name">Pro Tablet</div>
+                    <div class="product-price">$549</div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TechHub. All rights reserved. | Premium Electronics Store</p>
+        </div>
+    </footer>
+
+    <!-- Heap Analytics Script -->
+    <script type="text/javascript">
+        window.heapReadyCb=window.heapReadyCb||[],window.heap=window.heap||[],heap.load=function(e,t){window.heap.envId=e,window.heap.clientConfig=t=t||{},window.heap.clientConfig.shouldFetchServerConfig=!1;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://cdn.us.heap-api.com/config/"+e+"/heap_config.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(a,r);var n=["init","startTracking","stopTracking","track","resetIdentity","identify","getSessionId","getUserId","getIdentity","addUserProperties","addEventProperties","removeEventProperty","clearEventProperties","addAccountProperties","addAdapter","addTransformer","addTransformerFn","onReady","addPageviewProperties","removePageviewProperty","clearPageviewProperties","trackPageview"],i=function(e){return function(){var t=Array.prototype.slice.call(arguments,0);window.heapReadyCb.push({name:e,fn:function(){heap[e]&&heap[e].apply(heap,t)}})}};for(var p=0;p<n.length;p++)heap[n[p]]=i(n[p])}; 
+        heap.load("196500585");
+    </script>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+        let cartCount = 0;
+
+        // Get DOM elements
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCountElement = document.getElementById('cartCount');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+        // Add to cart functionality WITH Heap tracking
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                const productCard = this.closest('.product-card');
+                const productName = productCard.querySelector('.product-name').textContent;
+                const productPrice = productCard.querySelector('.product-price').textContent;
+                const productData = productCard.dataset.product;
+                
+                // 🔥 Heap Analytics: Track add to cart event
+                heap.track('Product Added to Cart', {
+                    product_name: productName,
+                    product_price: productPrice,
+                    product_id: productData,
+                    cart_size: cartCount + 1,
+                    price_value: parseFloat(productPrice.replace('$', '').replace(',', ''))
+                });
+                
+                // Add to cart array
+                cart.push({
+                    name: productName,
+                    price: productPrice,
+                    id: productData
+                });
+                
+                // Update cart count
+                cartCount++;
+                cartCountElement.textContent = cartCount;
+                
+                // Add pulse animation to cart icon
+                cartIcon.classList.add('pulse');
+                setTimeout(() => {
+                    cartIcon.classList.remove('pulse');
+                }, 300);
+                
+                // Change button text temporarily
+                const originalText = this.textContent;
+                this.textContent = 'Added!';
+                this.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = '';
+                }, 1000);
+                
+                console.log('Added to cart:', productName);
+            });
+        });
+
+        // Cart icon click functionality WITH Heap tracking
+        cartIcon.addEventListener('click', function() {
+            // 🔥 Heap Analytics: Track cart view event
+            const cartValue = cart.reduce((total, item) => total + parseFloat(item.price.replace('$', '').replace(',', '')), 0);
+            
+            heap.track('Cart Viewed', {
+                cart_size: cart.length,
+                cart_value: cartValue,
+                products_in_cart: cart.map(item => item.name)
+            });
+            
+            if (cart.length === 0) {
+                // Track empty cart view
+                heap.track('Empty Cart Viewed');
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            let cartContents = 'Cart Contents:\n\n';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                cartContents += `${index + 1}. ${item.name} - ${item.price}\n`;
+                total += parseFloat(item.price.replace('$', '').replace(',', ''));
+            });
+            
+            cartContents += `\nTotal: $${total.toFixed(2)}`;
+            alert(cartContents);
+        });
+
+        // Smooth scrolling for navigation links WITH Heap tracking
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const sectionName = this.getAttribute('href').replace('#', '');
+                
+                // 🔥 Heap Analytics: Track navigation clicks
+                heap.track('Navigation Clicked', {
+                    section: sectionName,
+                    link_text: this.textContent,
+                    from_section: window.location.hash || 'top'
+                });
+                
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Product card hover effects WITH Heap tracking
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+                
+                // 🔥 Heap Analytics: Track product hover
+                const productName = this.querySelector('.product-name').textContent;
+                const productData = this.dataset.product;
+                
+                heap.track('Product Hovered', {
+                    product_name: productName,
+                    product_id: productData
+                });
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+            
+            // Track product card clicks (product views)
+            card.addEventListener('click', function(e) {
+                // Don't track if clicking the add to cart button
+                if (e.target.classList.contains('add-to-cart')) return;
+                
+                const productName = this.querySelector('.product-name').textContent;
+                const productPrice = this.querySelector('.product-price').textContent;
+                const productData = this.dataset.product;
+                
+                // 🔥 Heap Analytics: Track product view
+                heap.track('Product Viewed', {
+                    product_name: productName,
+                    product_price: productPrice,
+                    product_id: productData,
+                    price_value: parseFloat(productPrice.replace('$', '').replace(',', ''))
+                });
+            });
+        });
+
+        // Track CTA button clicks
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            // 🔥 Heap Analytics: Track CTA click
+            heap.track('CTA Clicked', {
+                cta_text: this.textContent,
+                cta_location: 'hero_section'
+            });
+        });
+
+        // Track scroll depth
+        let maxScrollDepth = 0;
+        window.addEventListener('scroll', function() {
+            const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            
+            if (scrollDepth > maxScrollDepth) {
+                maxScrollDepth = scrollDepth;
+                
+                // Track scroll milestones
+                if (scrollDepth >= 25 && scrollDepth < 50 && maxScrollDepth < 50) {
+                    heap.track('Scroll Depth 25%');
+                } else if (scrollDepth >= 50 && scrollDepth < 75 && maxScrollDepth < 75) {
+                    heap.track('Scroll Depth 50%');
+                } else if (scrollDepth >= 75 && maxScrollDepth < 100) {
+                    heap.track('Scroll Depth 75%');
+                } else if (scrollDepth >= 100) {
+                    heap.track('Scroll Depth 100%');
+                }
+            }
+            
+            // Header background effect
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Track page load and user properties
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for Heap to be ready
+            heap.onReady(function() {
+                // 🔥 Heap Analytics: Track page view with detailed info
+                heap.track('Page Viewed', {
+                    page_title: document.title,
+                    page_url: window.location.href,
+                    user_agent: navigator.userAgent,
+                    screen_resolution: `${screen.width}x${screen.height}`,
+                    viewport_size: `${window.innerWidth}x${window.innerHeight}`,
+                    page_load_time: performance.now()
+                });
+                
+                // Add user properties
+                heap.addUserProperties({
+                    visit_timestamp: new Date().toISOString(),
+                    initial_page_load_time: performance.now(),
+                    device_type: window.innerWidth > 768 ? 'desktop' : 'mobile',
+                    browser_language: navigator.language
+                });
+            });
+        });
+
+        // Track session duration when user leaves
+        window.addEventListener('beforeunload', function() {
+            const sessionDuration = performance.now();
+            
+            // 🔥 Heap Analytics: Track session end
+            heap.track('Session Ended', {
+                session_duration: Math.round(sessionDuration / 1000), // in seconds
+                max_scroll_depth: maxScrollDepth,
+                cart_items_at_exit: cart.length,
+                final_cart_value: cart.reduce((total, item) => total + parseFloat(item.price.replace('$', '').replace(',', '')), 0)
+            });
+        });
+
+        // Track time spent on products section
+        let productsViewStartTime = null;
+        const productsSection = document.getElementById('products');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    productsViewStartTime = Date.now();
+                    heap.track('Products Section Viewed');
+                } else if (productsViewStartTime) {
+                    const timeSpent = Date.now() - productsViewStartTime;
+                    heap.track('Products Section Time Spent', {
+                        time_spent_seconds: Math.round(timeSpent / 1000)
+                    });
+                    productsViewStartTime = null;
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(productsSection);
+    </script>
+</body>
+</html>
